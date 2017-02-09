@@ -12,7 +12,7 @@ import scala.collection.JavaConversions
 import scala.io.Source
 
 
-object Demo {
+object Lab3 {
 
 	// Application Specific Variables
 	private final val SPARK_MASTER = "yarn-client"
@@ -38,6 +38,7 @@ object Demo {
 		//-------------------------------------------------------------------//
 		//------------- Your code should starts from here. ------------------//
 		//-------------------------------------------------------------------//
+
 
 		// Print Usage Information
 		System.out.println("\n----------------------------------------------------------------\n")
@@ -70,8 +71,13 @@ object Demo {
 			val texts = lines.map(line => line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)")).map(cs => (if (cs.size < 7) ""; else cs(6)))
 			val words = texts.flatMap(_.split("[ .,?!:\"]"))
 			// fill in your code here
-			// ...
-			// top100 =
+			val hashTags = words.filter(x=>x.length() > 0 && x(0) == '#')
+
+			val hashKey = hashTags.map(x => (x, 1))
+      val hashFrequency = hashKey.reduceByKey((x,y) => x+y)
+
+			val top100 = hashFrequency.collect.toSeq.sortWith(_._2 > _._2).take(100)
+
 
 			// output result into file, uncomment it after you finish the code
 			// val writer = new PrintWriter(new File("output.txt"))
