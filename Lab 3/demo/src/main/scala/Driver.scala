@@ -80,7 +80,6 @@ object Lab3 {
 			val top100 = hashFrequency.collect.toSeq.sortWith(_._2 > _._2).take(100)
 
 
-			 output result into file, uncomment it after you finish the code
 			 val writer = new PrintWriter(new File("output.txt"))
 			 top100.foreach(x => writer.write(x._1 + "\t" + x._2 + "\n"))
 			 writer.close()
