@@ -1,4 +1,4 @@
-package demo
+package lab3
 
 import java.io.PrintWriter
 import java.io.File
@@ -16,7 +16,7 @@ object Lab3 {
 
 	// Application Specific Variables
 	private final val SPARK_MASTER = "yarn-client"
-	private final val APPLICATION_NAME = "demo"
+	private final val APPLICATION_NAME = "lab3"
 
 	// HDFS Configuration Files
 	private final val CORE_SITE_CONFIG_PATH = new Path("/usr/hdp/current/hadoop-client/conf/core-site.xml")
@@ -42,9 +42,10 @@ object Lab3 {
 
 		// Print Usage Information
 		System.out.println("\n----------------------------------------------------------------\n")
-		System.out.println("Usage: spark-submit [spark options] demo.jar [exhibit]")
+		System.out.println("Usage: spark-submit [spark options] lab3.jar [exhibit]")
 		System.out.println(" Exhibit \'hw\': HelloWorld")
 		System.out.println(" Exhibit \'tweet\': Top Tweeters")
+		System.out.println("Exhibit \'hashtag\': Top Hashtag")
 		System.out.println("\n----------------------------------------------------------------\n");
 
 		// Exhibit: HelloWorld
@@ -74,7 +75,7 @@ object Lab3 {
 			val hashTags = words.filter(x=>x.length() > 0 && x(0) == '#')
 
 			val hashKey = hashTags.map(x => (x, 1))
-      val hashFrequency = hashKey.reduceByKey((x,y) => x+y)
+      	                val hashFrequency = hashKey.reduceByKey((x,y) => x+y)
 
 			val top100 = hashFrequency.collect.toSeq.sortWith(_._2 > _._2).take(100)
 
