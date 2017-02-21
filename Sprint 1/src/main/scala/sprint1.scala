@@ -1,5 +1,3 @@
-package lab4
-
 import java.io.PrintWriter
 import java.io.File
 import java.util.Arrays
@@ -18,7 +16,7 @@ object sprint1 {
 
 	// Application Specific Variables
 	private final val SPARK_MASTER = "yarn-client"
-	private final val APPLICATION_NAME = "lab4"
+	private final val APPLICATION_NAME = "sprint1"
 
 	// HDFS Configuration Files
 	private final val CORE_SITE_CONFIG_PATH = new Path("/usr/hdp/current/hadoop-client/conf/core-site.xml")
