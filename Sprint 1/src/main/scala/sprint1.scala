@@ -39,6 +39,7 @@ object sprint1 {
 		System.out.println("\n----------------------------------------------------------------\n")
 		System.out.println("Usage: spark-submit [spark options] demo.jar [exhibit]")
 		System.out.println(" Exhibit \'hw\': HelloWorld")
+		System.out.println("Exhibit \'sprint1': Sprint 1")
 		System.out.println("\n----------------------------------------------------------------\n");
 
 		// Exhibit: HelloWorld
@@ -48,16 +49,20 @@ object sprint1 {
 		}
 		//exhibit:
 		if(args(0) == "sprint1"){
-			val lines = sc.textFile("hdfs:/ds410/lab4/CSNNetwork.csv")
-			val item  = lines.map(line => line.split(","))
+			//hdfs dfs -put uberdata.csv /user/yib5063
+			val rawData = sc.texFile("/user/yib5063/uberdata.csv")
+			val lines = rawData.map(line => line.split(","))
+			
+			
+			/*
 			val string_item = item.filter( i => Try(i(1).toInt).isSuccess && Try(i(2).toInt).isSuccess)
 			val int_item = string_item.map( cs => (cs(1).toInt, cs(2).toInt)).filter( cs => cs._1 != cs._2)
-
-
-
-			val writer = new PrintWriter(new File("sprint1output.txt"))
-			results.foreach(x => writer.write(x._1 + "\t" + x._2._1 + "\t" + x._2._2 + "\n"))
-			writer.close()
+			//*/
+			
+			
+			//val writer = new PrintWriter(new File("sprint1output.txt"))
+			//results.foreach(x => writer.write(x._1 + "\t" + x._2._1 + "\t" + x._2._2 + "\n"))
+			//writer.close()
 
 		}
 
