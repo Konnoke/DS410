@@ -49,9 +49,11 @@ object sprint1 {
 		}
 		//exhibit:
 		if(args(0) == "sprint1"){
-			//hdfs dfs -put uberdata.csv /user/yib5063
-			val rawData = sc.texFile("/user/yib5063/uberdata.csv")
+			//hdfs dfs -put uberMerged.csv /user/yib5063
+			val rawData = sc.textFile("/user/yib5063/uberMerged.csv")
 			val lines = rawData.map(line => line.split(","))
+			
+			
 			
 			
 			/*
