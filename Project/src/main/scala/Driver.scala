@@ -45,6 +45,8 @@ object Driver {
 		System.out.println("spark-submit --master yarn-client --driver memory 12g --executor-memory 12g --num-executors 3 --executor-cores 8 project_2.10-1.0.jar sprint1")
 		System.out.println("\n----------------------------------------------------------------\n");
 
+
+
 		//exhibit:
 		if(args(0) == "sprint1"){
 			//hdfs dfs -put uberMerged.csv /user/yib5063
@@ -62,7 +64,10 @@ object Driver {
 
 			//subset the data to get the coords
 			val coords = df.drop("Base")
-			coords.show()
+
+
+
+			//coords.show()
 			//val coords_rdd: RDD[Row] = coords.rdd
 
 

@@ -16,9 +16,24 @@ import scala.io.Source
 import scala.util.Try
 
 class KMeansClustering(numClusters: Int, numIterations: Int) extends Serializable {
-    def clusterPapers(featureVectors: RDD[Vector]): RDD[Int] = {
+    def clusterLocation(featureVectors: RDD[Vector]): RDD[Int] = {
         val kmModel = KMeans.train(featureVectors, numClusters, numIterations)
 
         return kmModel.predict(featureVectors)
     }
+
+    def Distance(a:Array[Double], b:List[Double]) : Double = {
+	      assert(a.length == b.length, "Distance(): features dim does not match.")
+	      var dist = 0.0
+	      for (i <- 0 to a.length-1) {
+	          dist = dist + math.pow(a(i) - b(i), 2)
+	      }
+	      return math.sqrt(dist)
+	  }
+
+
+
+
+
+
 }
