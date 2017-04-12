@@ -1,8 +1,8 @@
 lazy val root = (project in file(".")).
 	settings(
-	name := "sprint1",
+	name := "Project",
 	version := "1.0",
-	scalaVersion := "2.11.1"
+	scalaVersion := "2.10.4"
 )
 libraryDependencies ++= Seq(
 	"org.apache.spark" %% "spark-core" % "1.5.2",
