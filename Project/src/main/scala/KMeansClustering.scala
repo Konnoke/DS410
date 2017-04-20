@@ -14,6 +14,7 @@ import org.apache.spark.SparkContext._
 import scala.collection.JavaConversions
 import scala.io.Source
 import scala.util.Try
+import org.apache.spark.mllib.clustering._
 
 class KMeansClustering(numClusters: Int, numIterations: Int) extends Serializable {
     def clusterLocation(featureVectors: RDD[Vector]): RDD[Int] = {
@@ -30,6 +31,9 @@ class KMeansClustering(numClusters: Int, numIterations: Int) extends Serializabl
 	      }
 	      return math.sqrt(dist)
 	  }
+
+    //val kmeans = new KMeans()
+    //val model = kmeans.run()
 
 
 
