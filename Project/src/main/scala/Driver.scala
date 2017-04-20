@@ -34,7 +34,7 @@ object Driver {
 
         // Print Usage Information
         System.out.println("\n----------------------------------------------------------------\n")
-        System.out.println("Usage: spark-submit [spark options] uber.jar [exhibit]")
+        System.out.println("Usage: spark-submit [spark options] Project.jar [exhibit]")
         System.out.println(" Exhibit \'kmeans\': KMeans Clustering")
         System.out.println("\n----------------------------------------------------------------\n");
 
@@ -49,7 +49,7 @@ object Driver {
 
           //run kmeans
           val iterationCount = 100
-          val clusterCount = 10
+          val clusterCount = 20
           val start = System.nanoTime
           //cache data
           val model = KMeans.train(parsedData, clusterCount, iterationCount)
@@ -62,6 +62,6 @@ object Driver {
           model.clusterCenters.foreach(println)
 
         }
-        
+
     }
 }
