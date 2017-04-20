@@ -1,5 +1,3 @@
-package uber
-
 import java.util.Arrays
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.FileSystem
@@ -10,14 +8,16 @@ import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.Row
 import org.apache.spark.rdd.RDD
 import scala.collection.JavaConversions
+import org.apache.spark.mllib.clustering._
+import org.apache.spark.mllib.linalg._
 import scala.io.Source
 
-object Demo {
+object Driver {
 
     // Application Specific Variables
     private final val SPARK_MASTER = "yarn-client"
-    private final val APPLICATION_NAME = "uber"
-    private final val DATASET_PATH_UBER = "/user/vpt5014/uberMerged.csv"
+    private final val APPLICATION_NAME = "Project"
+    private final val DATASET_PATH_UBER = "/user/yib5063/uberMerged.csv"
 
     // HDFS Configuration Files
     private final val CORE_SITE_CONFIG_PATH = new Path("/usr/hdp/current/hadoop-client/conf/core-site.xml")
@@ -40,21 +40,26 @@ object Demo {
 
         // Exhibit: KMeans Clustering
         if(args(0) == "kmeans") {
-            val sqlContext = new SQLContext(sc)
-            val df = sqlContext.read
-                .format("com.databricks.spark.csv")
-                .option("header", "true") //use first line of all files as header
-                .option("inferSchema", "true") //infer data types automatically
-                .load(DATASET_PATH_UBER)
-            val coords = df.drop("Date.Time", "Base").rdd
+
+          //load the data
+          val rdd = sc.textFile("/user/yib5063/uberMerged.csv")
+
+          //clean the data, cache it in memory for kmeans
+          val parsedData = rdd.map{ line => Vectors.dense(line.split(",").slice(2, 4).map(_.toDouble))}.cache()
+
+          //run kmeans
+          val iterationCount = 100
+          val clusterCount = 10
+          val start = System.nanoTime
+          //cache data
+          val model = KMeans.train(parsedData, clusterCount, iterationCount)
             //[id, lat, lon]
+          val end = System.nanoTime
+          println("KMeans Run-Time: " + (end - start) / 10e9 + "s")
+          val clusterCenters = model.clusterCenters map (_.toArray)
+          val cost = model.computeCost(parsedData)
+          println("Cost: " + cost)
 
-            val start = System.nanoTime
-            val clustersOfLocations = new KMeansClustering(3, 100).//clusterPapers(featureVectors)
-
-            val end = System.nanoTime
-
-            println((end - start) / 10e9 + "s")
         }
     }
 }
