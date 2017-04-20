@@ -59,7 +59,9 @@ object Driver {
           val clusterCenters = model.clusterCenters map (_.toArray)
           val cost = model.computeCost(parsedData)
           println("Cost: " + cost)
+          model.clusterCenters.foreach(println)
 
         }
+        
     }
 }
