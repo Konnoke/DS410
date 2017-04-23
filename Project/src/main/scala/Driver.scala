@@ -58,18 +58,17 @@ object Driver {
           val end = System.nanoTime
           println("KMeans Run-Time: " + (end - start) / 10e9 + "s")
 
-          val clusterCenters = model.clusterCenters map (_.toArray).collect()
+          val clusterCenters = model.clusterCenters map (_.toArray)
           val cost = model.computeCost(parsedData)
           println("Cost: " + cost)
 
-          //write cluster centers to file
-          val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
-          clusterCenters.foreach(x => writer1.write(x + "\n"))
-          writer1.close()
+          //write cluster centers to screen (file wasn't working, only gave pointers)
+          clusterCenters.foreach(println)
 
           //show cluster centers and the number of members in them
           //write to file
           val clusterInd = model.predict(parsedData).collect()
+          clusterInd.collect()
           val clusterSizes = clusterInd.countByValue()
           val writer2 = new PrintWriter(new File("uberNightClusterSizes.txt"))
           clusterSizes.foreach(x => writer2.write(x + "\n"))
