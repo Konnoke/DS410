@@ -43,8 +43,8 @@ object Driver {
         if(args(0) == "kmeans") {
 
           //load the data
-          //val rdd = sc.textFile("/user/vpt5014/uberNight.csv")
-		      val rdd = sc.textFile("/user/yib5063/uberNight.csv")
+          val rdd = sc.textFile("/user/vpt5014/uberNight.csv")
+		      //val rdd = sc.textFile("/user/yib5063/uberNight.csv")
 
           //clean the data, cache it in memory for kmeans
           val parsedData = rdd.map{ line => Vectors.dense(line.split(",").slice(3, 5).map(_.toDouble))}.cache()
@@ -61,9 +61,11 @@ object Driver {
           val clusterCenters = model.clusterCenters map (_.toArray)
           val cost = model.computeCost(parsedData)
           println("Cost: " + cost)
-          model.clusterCenters.foreach(println)
+
           //write cluster centers to file
           val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
+          writer1.write("KMeans Run-Time: " + (end - start) / 10e9 + "s")
+          writer1.write("Cost: " + cost)
           model.clusterCenters.foreach(x => writer1.write(x + "\n"))
           writer1.close()
 
