@@ -42,14 +42,15 @@ object Driver {
         if(args(0) == "kmeans") {
 
           //load the data
-          val rdd = sc.textFile("/user/yib5063/uberMerged.csv")
+          //val rdd = sc.textFile("/user/yib5063/uberMerged.csv")
+		val rdd = sc.textFile("/user/yib5063/uberNight.csv")
 
           //clean the data, cache it in memory for kmeans
-          val parsedData = rdd.map{ line => Vectors.dense(line.split(",").slice(2, 4).map(_.toDouble))}.cache()
+          val parsedData = rdd.map{ line => Vectors.dense(line.split(",").slice(3, 5).map(_.toDouble))}.cache()
 
           //run kmeans
           val iterationCount = 100
-          val clusterCount = 20
+          val clusterCount = 200
           val start = System.nanoTime
           //cache data
           val model = KMeans.train(parsedData, clusterCount, iterationCount)
