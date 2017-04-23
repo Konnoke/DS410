@@ -43,7 +43,7 @@ object Driver {
         if(args(0) == "kmeans") {
 
           //load the data
-          //val rdd = sc.textFile("/user/vpt5014/uberNight.csv")
+          //val rdd = sc.textFile("/user/yib5063/uberMerged.csv")
 		      val rdd = sc.textFile("/user/yib5063/uberNight.csv")
 
           //clean the data, cache it in memory for kmeans
@@ -57,17 +57,21 @@ object Driver {
             //[id, lat, lon]
           val end = System.nanoTime
           println("KMeans Run-Time: " + (end - start) / 10e9 + "s")
-
+          
           val clusterCenters = model.clusterCenters map (_.toArray)
           val cost = model.computeCost(parsedData)
           println("Cost: " + cost)
 
-          //write cluster centers to screen (file wasn't working, only gave pointers)
-          clusterCenters.foreach(println)
+          //write cluster centers to file
+          val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
+          //clusterCenters.collect()
+          clusterCenters.foreach(x => writer1.write(x + "\n"))
+          writer1.close()
 
           //show cluster centers and the number of members in them
           //write to file
-          val clusterInd = model.predict(parsedData).collect()
+          val clusterInd = model.predict(parsedData)
+          clusterInd.collect()
           val clusterSizes = clusterInd.countByValue()
           val writer2 = new PrintWriter(new File("uberNightClusterSizes.txt"))
           clusterSizes.foreach(x => writer2.write(x + "\n"))
