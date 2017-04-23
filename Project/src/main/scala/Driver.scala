@@ -62,7 +62,7 @@ object Driver {
           clusterCenters.foreach(println)
           val cost = model.computeCost(parsedData)
           println("Cost: " + cost)
-
+          model.clusterCenters.foreach(println)
           //write cluster centers to file
           //val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
           //clusterCenters.collect()
