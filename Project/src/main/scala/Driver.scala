@@ -63,6 +63,7 @@ object Driver {
           println("Cost: " + cost)
 
           //write cluster centers to file
+          clusterCenter.collect()
           val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
           clusterCenters.foreach(x => writer1.write(x + "\n"))
           writer1.close()
