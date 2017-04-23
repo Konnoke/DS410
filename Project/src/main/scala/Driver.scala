@@ -63,18 +63,18 @@ object Driver {
           println("Cost: " + cost)
 
           //write cluster centers to file
-          clusterCenters.collect()
+          val ccs = clusterCenters.collect()
           val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
-          clusterCenters.foreach(x => writer1.write(x + "\n"))
+          ccs.foreach(x => writer1.write(x + "\n"))
           writer1.close()
 
           //show cluster centers and the number of members in them
           //write to file
           val clusterInd = model.predict(parsedData)
-          clusterInd.collect()
+          val cis = clusterInd.collect()
           val clusterSizes = clusterInd.countByValue()
           val writer2 = new PrintWriter(new File("uberNightClusterSizes.txt"))
-          clusterSizes.foreach(x => writer2.write(x + "\n"))
+          cis.foreach(x => writer2.write(x + "\n"))
           writer2.close()
 
 
