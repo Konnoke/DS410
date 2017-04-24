@@ -50,7 +50,7 @@ object Driver {
           val parsedData = rdd.map{ line => Vectors.dense(line.split(",").slice(3, 5).map(_.toDouble))}.cache()
 
           //run kmeans
-          val iterationCount = 100
+          val iterationCount = 1000
           val clusterCount = 200
           val start = System.nanoTime
           val model = KMeans.train(parsedData, clusterCount, iterationCount)
@@ -63,9 +63,9 @@ object Driver {
           println("Cost: " + cost)
 
           //write cluster centers to file
-          val writer1 = new PrintWriter(new File("uberNightClusterCenters.txt"))
-          writer1.write("KMeans Run-Time: " + (end - start) / 10e9 + "s")
-          writer1.write("Cost: " + cost)
+          val writer1 = new PrintWriter(new File("uberNightClusterCenters1000.txt"))
+          writer1.write("KMeans Run-Time: " + (end - start) / 10e9 + "s" +"\n")
+          writer1.write("Cost: " + cost +"\n")
           model.clusterCenters.foreach(x => writer1.write(x + "\n"))
           writer1.close()
 
@@ -74,7 +74,7 @@ object Driver {
           val clusterInd = model.predict(parsedData)
           clusterInd.collect()
           val clusterSizes = clusterInd.countByValue()
-          val writer2 = new PrintWriter(new File("uberNightClusterSizes.txt"))
+          val writer2 = new PrintWriter(new File("uberNightClusterSizes1000.txt"))
           clusterSizes.foreach(x => writer2.write(x + "\n"))
           writer2.close()
 
